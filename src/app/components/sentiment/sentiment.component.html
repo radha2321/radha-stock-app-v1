@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row section">
+    <div class="col-md-12">
+      <div class="heading">
+        <h3>Stock Tracker</h3>
+      </div>
+      <div class="mt-2 card px-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content">
+              <h4 *ngIf="symbolName">
+                {{ symbolName | titlecase }} ({{ symbolName }})
+              </h4>
+            </div>
+          </div>
+          <div
+            class="col-md-4 col-sm-4 col-4"
+            *ngFor="let stock of sentimentData; let i = index"
+          >
+            <div class="content d-flex">
+              <div class="mr-5">
+                <p>{{ getMonthInfo(stock?.month) }}</p>
+                <p>Change: {{ stock?.change }}</p>
+                <p>MSPR: {{ stock?.mspr }}</p>
+              </div>
+              <div>
+                <img
+                  class="icon"
+                  src="{{ getImage(stock?.change) }}"
+                  width="40px"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="text-center" *ngIf="!sentimentData?.length">No data</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 p-2 mt-4">
+        <button class="btn btn-primary" routerLink="/">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-arrow-left-circle"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+            />
+          </svg>
+          Back to list of stocks
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

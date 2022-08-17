@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row section">
+    <div class="col-md-12">
+      <div class="heading">
+        <h3>Stock Tracker App</h3>
+      </div>
+      <form
+        [formGroup]="stockTrackerFormGroup"
+        (ngSubmit)="submit()"
+        novalidate
+        autocomplete="off"
+      >
+        <div class="mt-4 px-4">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="content mb-4">
+                <p>
+                  Enter the symbol of a stock to track (i.e. AAPL, TSLA, GOOGL)
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-6">
+              <div class="content d-flex">
+                <div class="mr-5">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="static"
+                    formControlName="symbol"
+                    placeholder="Enter stock symbol"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-6">
+              <div class="content d-flex">
+                <div class="mr-5">
+                  <button
+                    type="submit"
+                    class="btn btn-primary mb-3"
+                    [disabled]="!stockTrackerFormGroup.valid"
+                  >
+                    Track Stock
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row section">
+    <div class="col-md-12">
+      <div
+        class="mt-2 card px-4"
+        *ngFor="let stock of stockList; let i = index"
+      >
+        <span (click)="removeStock(i)">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x-circle"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+            />
+            <path
+              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+            />
+          </svg>
+        </span>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="content">
+              <h5>
+                {{ stock?.description | titlecase }} ({{ stock?.symbol }})
+              </h5>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-4">
+            <div class="content d-flex">
+              <div class="mr-5">
+                <p>Change today: {{ stock?.d | percent }}</p>
+                <p>Current price: {{ stock?.c | currency }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-4">
+            <div class="content d-flex">
+              <div class="mr-5">
+                <p>Opening price: {{ stock?.o | currency }}</p>
+                <p>High price: {{ stock?.h | currency }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 btn-section">
+            <a
+              routerLink="/sentiment/{{ stock?.symbol }}"
+              class="btn btn-primary"
+              routerLinkActive="active"
+            >
+              Go to social sentiment details
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
